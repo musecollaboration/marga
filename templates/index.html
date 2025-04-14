@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'head.html' %}
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+<div class="site-wrap" id="home-section">
+    {% include 'navbar.html' %}
+    {% include 'header.html' %}
+    {% block carousel %}
+        {% include 'carousel.html' %}
+    {% endblock %}
+    {% block content %} {% endblock %}
+</div>
+
+{% include 'scripts.html' %}
+{% include 'footer.html' %}
+
+</body>
+</html>
