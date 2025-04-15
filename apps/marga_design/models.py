@@ -17,6 +17,7 @@ class Project(AutoSlugMixin):
     updated = models.DateTimeField(auto_now=True, verbose_name='Дата обновления', help_text='Дата обновления проекта')
     published = models.BooleanField(default=True, verbose_name='Статус',
                                     help_text='Убрать галочку если нужно снять с публикации')
+    # top_rating = models.BooleanField(default=False, verbose_name='Рейтинг', help_text='Публикации для главной страницы')
 
     class Meta:
         ordering = ['-created']
