@@ -41,7 +41,8 @@ class Parameter(AutoSlugMixin):
 
 class ProjectParameter(models.Model):
     """Связь параметров и проектов"""
-    parameter = models.ForeignKey(Parameter, on_delete=models.CASCADE, related_name='parameters_set', verbose_name='Параметры')
+    parameter = models.ForeignKey(Parameter, on_delete=models.CASCADE, related_name='parameters_set',
+                                  verbose_name='Параметры')
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project_parameters_set')
 
     class Meta:
