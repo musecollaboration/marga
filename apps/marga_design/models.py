@@ -8,6 +8,7 @@ from apps.services.utils import ProjectImagePath
 class Project(AutoSlugMixin):
     """Модель для проектов"""
     title = models.CharField(max_length=255, verbose_name='Название проекта')
+    # location = models.CharField(max_length=255, verbose_name='Локация')
     description = models.TextField(verbose_name='Информация о проекте')
     price = models.IntegerField(blank=True, null=True, verbose_name='Цена проекта')
     plan_image = models.ImageField(upload_to=ProjectImagePath('plan_images'), blank=True, null=True,
@@ -17,7 +18,7 @@ class Project(AutoSlugMixin):
     updated = models.DateTimeField(auto_now=True, verbose_name='Дата обновления', help_text='Дата обновления проекта')
     published = models.BooleanField(default=True, verbose_name='Статус',
                                     help_text='Убрать галочку если нужно снять с публикации')
-    # top_rating = models.BooleanField(default=False, verbose_name='Рейтинг', help_text='Публикации для главной страницы')
+    # top_rating = models.BooleanField(default=False, verbose_name='Рейтинг', help_text='Публикации на главной страницы')
 
     class Meta:
         ordering = ['-created']
