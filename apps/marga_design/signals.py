@@ -9,7 +9,7 @@ from marga import settings
 from .models import AutoSlugMixin, Project, ProjectImage
 
 
-@receiver(pre_save)
+@receiver(pre_save, sender=Project)
 def update_slug_and_rename_project_folders(sender, instance, **kwargs):
     if not issubclass(sender, AutoSlugMixin):
         return

@@ -40,13 +40,13 @@ class ProjectAdmin(admin.ModelAdmin):
     readonly_fields = ['created']
     search_fields = ['title']
     inlines = [ProjectParameterInline, ProjectImageInline]
-    list_display = ['title', 'price', 'published']
-    list_editable = ['price', 'published']
+    list_display = ['title', 'price', 'published', 'top_rating']
+    list_editable = ['price', 'published', 'top_rating']
     list_per_page = 10
     save_on_top = True
     ordering = ['-created']
     list_filter = ['published', 'price']
-    fields = ['title', 'price', 'published', 'description', 'plan_image', 'created']
+    fields = ['title','location','top_rating', 'price', 'published', 'description', 'created','plan_image']
     actions = ['on_published', 'off_published']
 
     @admin.action(description='Снять с публикации')
