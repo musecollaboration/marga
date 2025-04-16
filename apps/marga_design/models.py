@@ -73,6 +73,9 @@ class ProjectImage(models.Model):
     def __str__(self):
         return f'Изображение для: {self.project.title}'
 
+
+
+
 # python manage.py shell_plus --print-sql
 # python manage.py makemigrations
 # python manage.py migrate
