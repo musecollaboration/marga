@@ -23,7 +23,7 @@ class Project(AutoSlugMixin):
     class Meta:
         ordering = ['-created']
         verbose_name = 'Neva проект'
-        verbose_name_plural = 'Neva проекты'
+        verbose_name_plural = '  Neva проекты'
 
     def get_absolute_url(self):
         return reverse('marga_design:project', kwargs={'slug': self.slug})
@@ -75,22 +75,33 @@ class ProjectImage(models.Model):
 
 class Application(models.Model):
     """Модель для обратной связи"""
-    NO = 'NO'
-    YES = 'YES'
+    NEW = 'NEW'
     PENDING = 'PENDING'
+    REFUSAL = 'REFUSAL'
+    AGREEMENT = 'AGREEMENT'
+    WORK = 'WORK'
     ANSWER_CHOICES = [
-        (NO, 'Не отвечено'),
-        (YES, 'Ответили'),
+        (NEW, 'Новая заявка'),
+        (WORK, 'В работе'),
         (PENDING, 'В ожидании ответа'),
+        (REFUSAL, 'Отказ'),
+        (AGREEMENT, 'Согласие'),
     ]
 
     name = models.CharField(max_length=100, verbose_name='ФИО')
     email = models.EmailField(verbose_name='Email')
     phone = models.CharField(max_length=20, verbose_name='Телефон')
-    message = models.TextField(verbose_name='Сообщение')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    answer = models.CharField(max_length=10, default='NO', choices=ANSWER_CHOICES,
-                              verbose_name='Ответ на заявку')
+    message = models.TextField(verbose_name='Сообщение клиента')
+    note = models.TextField(blank=True, null=True, verbose_name='Примечание')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+    answer = models.CharField(max_length=15, default='NO', choices=ANSWER_CHOICES,
+                              verbose_name='Статус')
+
+    class Meta:
+        verbose_name = 'Заявка клиента'
+        verbose_name_plural = 'Заявки клиентов'
+        ordering = ['-created']
 
 
 # python manage.py shell_plus --print-sql

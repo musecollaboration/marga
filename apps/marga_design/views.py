@@ -55,7 +55,7 @@ class MargaProjectsApplicationCreateView(CreateView):
     success_url = reverse_lazy('marga_design:thanks')
 
     def form_valid(self, form):
-        form.instance.answer = Application.NO
+        form.instance.answer = Application.NEW
         return super().form_valid(form)
 
     # def form_invalid(self, form):
