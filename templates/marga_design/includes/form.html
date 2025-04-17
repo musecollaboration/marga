@@ -1,0 +1,10 @@
+<div class="container"
+     style="margin-top: 100px; margin-bottom: 50px; max-width: 500px; background-color: #e9ecef; padding: 30px; border-radius: 8px;">
+    <h2 class="text-center">Форма обратной связи</h2>
+
+    <form action="{% url 'marga_design:application' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Django сам создаст поля формы -->
+        <button type="submit" class="btn btn-primary w-100 mt-3">Отправить</button>
+    </form>
+</div>

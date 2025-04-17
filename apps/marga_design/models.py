@@ -73,7 +73,24 @@ class ProjectImage(models.Model):
     def __str__(self):
         return f'Изображение для: {self.project.title}'
 
+class Application(models.Model):
+    """Модель для обратной связи"""
+    NO = 'NO'
+    YES = 'YES'
+    PENDING = 'PENDING'
+    ANSWER_CHOICES = [
+        (NO, 'Не отвечено'),
+        (YES, 'Ответили'),
+        (PENDING, 'В ожидании ответа'),
+    ]
 
+    name = models.CharField(max_length=100, verbose_name='ФИО')
+    email = models.EmailField(verbose_name='Email')
+    phone = models.CharField(max_length=20, verbose_name='Телефон')
+    message = models.TextField(verbose_name='Сообщение')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    answer = models.CharField(max_length=10, default='NO', choices=ANSWER_CHOICES,
+                              verbose_name='Ответ на заявку')
 
 
 # python manage.py shell_plus --print-sql

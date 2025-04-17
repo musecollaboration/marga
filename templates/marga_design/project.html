@@ -8,11 +8,11 @@
 
 {% block content %}
 
-    <div class="container"
+    <div class="container mb-5"
          style="margin-top: 100px;
-         background-color: #e9ecef;
-         padding: 50px;
-         border-radius: 8px; ">
+     background-color: #e9ecef;
+     padding: 50px;
+     border-radius: 8px;">
 
         <!-- Заголовок проекта -->
         <div class="text-center mb-4">
@@ -22,7 +22,7 @@
 
         <div class="container mb-5">
             <div class="text-center mx-auto p-4 bg-light shadow rounded" style="max-width: 400px;">
-                <form action="/" method="get">
+                <form action="{% url "marga_design:application" %}" method="get">
                     <label class="fw-bold fs-5 d-block">
                         Заказать индивидуальный проект в подобном стиле
                     </label>

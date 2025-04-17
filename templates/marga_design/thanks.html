@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block carousel %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="text-center p-4 border rounded bg-light shadow">
+            <h1>Спасибо за вашу заявку!</h1>
+            <p>Мы получили ваше сообщение и скоро с вами свяжемся.</p>
+            <a href="{% url 'marga_design:index' %}" class="btn btn-primary mt-3">Вернуться на главную</a>
+        </div>
+    </div>
+{% endblock %}
