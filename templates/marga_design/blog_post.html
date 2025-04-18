@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'index.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block carousel %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 mb-5">
+        {% if user.is_staff %}
+            <a href="{% url 'marga_design:blog_edit' blog_post.slug %}" class="btn btn-primary">Редактировать пост</a>
+        {% endif %}
+        <h1>{{ blog_post.title }}</h1>
+        <p>{{ blog_post.created }}</p>
+        <div>{{ blog_post.description|linebreaks|safe }}</div>
+
+        <div class="text-center">
+            <h3>Фото дизайн проекта</h3>
+            <div class="row mt-4">
+                {% for image in blog_post.images.all %}
+                    <div class="col-md-4 mb-4 d-flex justify-content-center">
+                        <div style="width: 100%; max-width: 350px; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
+                            <img src="{{ image.image.url }}"
+                                 alt="{{ blog_post.title }}"
+                                 class="img-fluid"
+                                 style="width: 100%; height: auto;">
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>Нет изображений</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

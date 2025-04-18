@@ -2,7 +2,7 @@
 
 <div class="site-section">
     <div class="container">
-        <div class="row  mb-5">
+        <div class="row mb-5">
             <div class="col-md-7">
                 <h2 class="heading-39291">Свежие идеи</h2>
                 <p>Мы делимся интересными наблюдениями, вдохновением и трендами, которые меняют представление о
@@ -10,46 +10,22 @@
             </div>
         </div>
         <div class="row align-items-stretch">
-            <div class="col-lg-3 col-md-6 mb-5">
-                <div class="post-entry-1 h-100">
-
-                    <div class="post-entry-1-contents">
-                        <span class="meta">Сентябрь 1, 2025</span>
-                        <h2><a href="#">Заголовок статьи</a></h2>
-                        <p class="my-3"><a href="#" class="more-39291">Подробнее</a></p>
+            {% for post in blog_posts %}
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                    <div class="post-entry-1 h-100 d-flex flex-column"> <!-- Теперь блоки одинаковой высоты -->
+                        <div class="post-entry-1-contents flex-grow-1 d-flex flex-column justify-content-between">
+                    <span class="meta" style="display:block; margin-bottom:4px;">
+                        {{ post.created|date:"d.m.Y" }}
+                    </span>
+                            <h3 class="mb-2 font-size-18 fw-normal" style="margin-top:0;">
+                                <a href="{{ post.get_absolute_url }}">{{ post.title|truncatechars:45 }}</a>
+                            </h3>
+                            <p class="mb-2"><a href="{{ post.get_absolute_url }}" class="more-39291">Подробнее</a></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <div class="post-entry-1 h-100">
-
-                    <div class="post-entry-1-contents">
-                        <span class="meta">Сентябрь 1, 2025</span>
-                        <h2><a href="#">Заголовок статьи</a></h2>
-                        <p class="my-3"><a href="#" class="more-39291">Подробнее</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <div class="post-entry-1 h-100">
-
-                    <div class="post-entry-1-contents">
-                        <span class="meta">Сентябрь 1, 2025</span>
-                        <h2><a href="#">Заголовок статьи</a></h2>
-                        <p class="my-3"><a href="#" class="more-39291">Подробнее</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <div class="post-entry-1 h-100">
-
-                    <div class="post-entry-1-contents">
-                        <span class="meta">Сентябрь 1, 2025</span>
-                        <h2><a href="#">Заголовок статьи</a></h2>
-                        <p class="my-3"><a href="#" class="more-39291">Подробнее</a></p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
+
     </div>
 </div>

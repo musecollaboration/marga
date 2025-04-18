@@ -145,9 +145,7 @@ def delete_project_files(sender, instance, **kwargs):
 
 @receiver(post_delete, sender=BlogPostImage)
 def delete_images(sender, instance, **kwargs):
-    """
-    Удаляет изображение из файловой системы при удалении объекта BlogPostImage.
-    """
+    """Удаляет изображение из файловой системы при удалении объекта BlogPostImage"""
     image = instance.image
     if image and image.path:
         try:

@@ -22,6 +22,11 @@ class MargaHome(ListView):
         queryset = queryset.filter(top_rating=True).order_by('?')[:4]
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['blog_posts'] = BlogPost.objects.all().order_by('-created')[:4]
+        return context
+
 
 class MargaProject(DetailView):
     """

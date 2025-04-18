@@ -123,7 +123,7 @@ class BlogPost(AutoSlugMixin):
         ordering = ['-created']
 
     def get_absolute_url(self):
-        return reverse('marga_design:project', kwargs={'slug': self.slug})
+        return reverse('marga_design:blog_post', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.title
