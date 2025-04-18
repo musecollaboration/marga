@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Project, ProjectImage, Parameter, ProjectParameter, Application
+from .models import Project, ProjectImage, Parameter, ProjectParameter, Application, BlogPost, BlogPostImage
 
 
 @admin.register(Parameter)
@@ -75,3 +75,24 @@ class ApplicationAdmin(admin.ModelAdmin):
     search_fields = ['name', 'email', 'phone']
     ordering = ['-created']
     list_per_page = 10
+
+
+class BlogPostImageline(admin.TabularInline):
+    model = BlogPostImage
+    extra = 1
+    max_num = 10
+    autocomplete_fields = ['blog_post']
+
+
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ['title', 'created', 'published']
+    list_editable = ['published']
+    fields = ['title', 'slug', 'description', 'created', 'published']
+    readonly_fields = ['created']
+    list_filter = ['created', 'published']
+    search_fields = ['title']
+    ordering = ['-created']
+    list_per_page = 10
+    save_on_top = True
+    inlines = [BlogPostImageline]

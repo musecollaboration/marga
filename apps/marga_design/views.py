@@ -1,11 +1,9 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views import View
-from django.views.generic import ListView, DetailView, CreateView
+from slugify import slugify
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from apps.marga_design.forms import AuthorForm
-from apps.marga_design.models import Project, Application
+from apps.marga_design.models import Project, Application, BlogPost
 
 
 # макет https://preview.colorlib.com/#marga
@@ -54,7 +52,6 @@ class MargaProjectsApplicationCreateView(CreateView):
     form_class = AuthorForm
     success_url = reverse_lazy('marga_design:thanks')
 
-
     def form_valid(self, form):
         form.instance.answer = Application.NEW
         return super().form_valid(form)
@@ -75,4 +72,42 @@ class MargaContactCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.answer = Application.NEW
+        return super().form_valid(form)
+
+
+class BlogListView(ListView):
+    """Список всех постов блога"""
+    model = BlogPost
+    template_name = "marga_design/blog_list.html"
+    context_object_name = "blog_posts"
+    ordering = ["-created"]
+
+
+class BlogPostDetailView(DetailView):
+    """Просмотр поста блога"""
+    model = BlogPost
+    template_name = "marga_design/blog_post.html"
+    context_object_name = "blog_post"
+    slug_field = "slug"
+    slug_url_kwarg = "slug"
+
+
+class BlogPostEditView(UpdateView):
+    """Редактирование поста блога"""
+    model = BlogPost
+    template_name = "marga_design/blog_edit.html"
+    fields = ["title", "content"]
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()  # Перенаправление после сохранения
+
+
+class CreateBlogPost(CreateView):
+    """Создание нового поста"""
+    model = BlogPost
+    template_name = "marga_design/blog_form.html"
+    fields = ["title", "content"]
+
+    def form_valid(self, form):
+        form.instance.slug = slugify(form.instance.title)  # Генерация слага перед сохранением
         return super().form_valid(form)

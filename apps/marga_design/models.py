@@ -73,6 +73,7 @@ class ProjectImage(models.Model):
     def __str__(self):
         return f'Изображение для: {self.project.title}'
 
+
 class Application(models.Model):
     """Модель для обратной связи"""
     NEW = 'NEW'
@@ -106,6 +107,43 @@ class Application(models.Model):
     def __str__(self):
         return f'Заявка от: {self.name} | дата: {self.created.strftime("%Y-%m-%d")}'
 
+
+class BlogPost(AutoSlugMixin):
+    """Модель для блога"""
+    title = models.CharField(max_length=255, verbose_name='Название поста')
+    description = models.TextField(verbose_name='Описание поста')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+    published = models.BooleanField(default=True, verbose_name='Статус',
+                                    help_text='Убрать галочку если нужно снять с публикации')
+
+    class Meta:
+        verbose_name = 'Блог'
+        verbose_name_plural = 'Блог'
+        ordering = ['-created']
+
+    def get_absolute_url(self):
+        return reverse('marga_design:project', kwargs={'slug': self.slug})
+
+    def __str__(self):
+        return self.title
+
+
+class BlogPostImage(models.Model):
+    """Модель для изображений блога"""
+    blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to=ProjectImagePath('blog_images'), verbose_name='Изображения')
+
+    class Meta:
+        verbose_name = 'Изображение поста'
+        verbose_name_plural = 'Изображения поста'
+
+    @property
+    def title(self):
+        return self.blog_post.title
+
+    def __str__(self):
+        return f'Изображение для: {self.blog_post.title}'
 
 # python manage.py shell_plus --print-sql
 # python manage.py makemigrations

@@ -1,7 +1,7 @@
 {% load static %}
 
 <head>
-    <title>Marga &mdash; Дизайн и строительство</title>
+    <title>Marga &mdash; Дизайн и интерьеров</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -31,4 +31,13 @@
 
     <!-- Основной CSS-файл сайта -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Для Блога -->
+    <!-- Подключение Quill.js через CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+    <!-- Кастомный скрипт -->
+    <script src="{% static 'js/quill_custom.js' %}"></script>
+
 </head>
