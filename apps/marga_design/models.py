@@ -103,6 +103,9 @@ class Application(models.Model):
         verbose_name_plural = 'Заявки клиентов'
         ordering = ['-created']
 
+    def __str__(self):
+        return f'Заявка от: {self.name} | дата: {self.created.strftime("%Y-%m-%d")}'
+
 
 # python manage.py shell_plus --print-sql
 # python manage.py makemigrations

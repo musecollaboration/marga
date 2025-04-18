@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block carousel %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <!-- Заголовок по центру -->
+        <div class="row mb-4 justify-content-center">
+            <div class="col-md-8 text-center">
+                <h2 class="heading-39291 mb-0">Контакты</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Первый блок: Адрес и контакты -->
+            <div class="col-md-6 text-start">
+                <div class="p-4 border rounded">
+                    <h3>Адрес:</h3>
+                    <p>117335 г. Москва, ул. Вавилова, 81к1</p>
+                    <p>Метро: Профсоюзная, Университет</p>
+
+                    <h3>Телефоны:</h3>
+                    <p>+7 (499) 394-73-78</p>
+                    <p>+7 (916) 504-06-00</p>
+
+                    <h3>Веб-сайт:</h3>
+                    <p><a href="https://decotrend.ru" target="_blank">decotrend.ru</a></p>
+
+                    <h3>E-mail:</h3>
+                    <p>info@decotrend.ru</p>
+                </div>
+            </div>
+
+            <!-- Второй блок: Дополнительная информация -->
+            <div class="col-md-6 text-start">
+                <div class="p-4 border rounded">
+                    <h3>Дополнительная информация:</h3>
+                    <p>Пять способов заказать дизайн-проект или получить консультацию:</p>
+                    <ul>
+                        <li>Позвонить по телефонам +7 (999) 123-45-67</li>
+                        <li>Написать сообщение в WhatsApp на номер +7 (999) 123-45-67</li>
+                        <li>Написать сообщение в Telegram на номер +7 (999) 123-45-67</li>
+                        <li>Написать письмо на email info@neva.com</li>
+                        <li>Заполнить форму обратной связи внизу этой страницы</li>
+                    </ul>
+
+                    <h3>По вопросам сотрудничества:</h3>
+                    <p>Email: neva@mail.com</p>
+                </div>
+            </div>
+            <div class="container"
+                 style="margin-top: 100px; margin-bottom: 50px; max-width: 500px; background-color: #e9ecef; padding: 30px; border-radius: 8px;">
+                <h2 class="text-center">Форма обратной связи</h2>
+
+                <form action="{% url 'marga_design:application' %}" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
