@@ -5,9 +5,6 @@ from . import views
 
 app_name = 'marga_design'
 urlpatterns = [
-<<<<<<< HEAD
-    path('', TemplateView.as_view(template_name='marga_design/home.html'), name='index'),
-=======
     path('', views.MargaHome.as_view(template_name='marga_design/home.html'), name='index'),
 
     path('projects/', views.MargaProjectsList.as_view(), name='projects_list'),
@@ -24,5 +21,4 @@ urlpatterns = [
     path("blog/<slug:slug>/", views.BlogPostDetailView.as_view(), name="blog_post"),
     path("blog/<slug:slug>/edit/", views.BlogPostEditView.as_view(), name="blog_edit"),
     path("blog/create/", views.CreateBlogPost.as_view(), name="create_blog_post"),
->>>>>>> feature/test-page
 ]
