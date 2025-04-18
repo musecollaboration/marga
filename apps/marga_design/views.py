@@ -54,6 +54,7 @@ class MargaProjectsApplicationCreateView(CreateView):
     form_class = AuthorForm
     success_url = reverse_lazy('marga_design:thanks')
 
+
     def form_valid(self, form):
         form.instance.answer = Application.NEW
         return super().form_valid(form)
@@ -63,3 +64,15 @@ class MargaProjectsApplicationCreateView(CreateView):
     #     return super().form_invalid(form)
 
 
+class MargaContactCreateView(CreateView):
+    """
+    Страница с формой обратной связи
+    """
+    model = Application
+    template_name = 'marga_design/contact.html'
+    form_class = AuthorForm
+    success_url = reverse_lazy('marga_design:thanks')
+
+    def form_valid(self, form):
+        form.instance.answer = Application.NEW
+        return super().form_valid(form)

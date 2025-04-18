@@ -14,6 +14,6 @@ urlpatterns = [
     path('services/', TemplateView.as_view(template_name='marga_design/services.html'), name='services'),
     path('about/', TemplateView.as_view(template_name='marga_design/about.html'), name='about'),
     path('blog/', TemplateView.as_view(template_name='marga_design/blog.html'), name='blog'),
-    path('contact/', TemplateView.as_view(template_name='marga_design/contact.html'), name='contact'),
+    path('contact/', views.MargaContactCreateView.as_view(template_name='marga_design/contact.html'), name='contact'),
     path('login/', TemplateView.as_view(template_name='marga_design/login.html'), name='login'),
 ]
