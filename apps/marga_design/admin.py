@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Project, ProjectImage, Parameter, ProjectParameter
+from .models import Project, ProjectImage, Parameter, ProjectParameter, Application, BlogPost, BlogPostImage
 
 
 @admin.register(Parameter)
@@ -40,13 +40,13 @@ class ProjectAdmin(admin.ModelAdmin):
     readonly_fields = ['created']
     search_fields = ['title']
     inlines = [ProjectParameterInline, ProjectImageInline]
-    list_display = ['title', 'price', 'published']
-    list_editable = ['price', 'published']
+    list_display = ['title', 'price', 'published', 'top_rating']
+    list_editable = ['published', 'top_rating']
     list_per_page = 10
     save_on_top = True
     ordering = ['-created']
     list_filter = ['published', 'price']
-    fields = ['title', 'price', 'published', 'description', 'plan_image', 'created']
+    fields = ['title', 'location', 'top_rating', 'price', 'published', 'description', 'created', 'plan_image']
     actions = ['on_published', 'off_published']
 
     @admin.action(description='Снять с публикации')
@@ -63,3 +63,36 @@ class ProjectAdmin(admin.ModelAdmin):
             request,
             f'Было опубликовано {count} проектов'
         )
+
+
+@admin.register(Application)
+class ApplicationAdmin(admin.ModelAdmin):
+    list_display = ['name', 'answer', 'created', 'updated', 'email', 'phone']
+    list_editable = ['answer']
+    fields = ['name', 'created', 'updated', 'answer', 'email', 'phone', 'message', 'note']
+    readonly_fields = ['created', 'updated', 'message']
+    list_filter = ['created', 'updated', 'answer']
+    search_fields = ['name', 'email', 'phone']
+    ordering = ['-created']
+    list_per_page = 10
+
+
+class BlogPostImageline(admin.TabularInline):
+    model = BlogPostImage
+    extra = 1
+    max_num = 10
+    autocomplete_fields = ['blog_post']
+
+
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ['title', 'created', 'published']
+    list_editable = ['published']
+    fields = ['title', 'slug', 'description', 'created', 'published']
+    readonly_fields = ['created']
+    list_filter = ['created', 'published']
+    search_fields = ['title']
+    ordering = ['-created']
+    list_per_page = 10
+    save_on_top = True
+    inlines = [BlogPostImageline]

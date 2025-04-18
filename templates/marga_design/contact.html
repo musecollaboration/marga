@@ -1,0 +1,68 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block carousel %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <!-- Заголовок по центру -->
+        <div class="row mb-4 justify-content-center">
+            <div class="col-md-8 text-center">
+                <h2 class="heading-39291 mb-0">Контакты</h2>
+            </div>
+        </div>
+
+        <!-- Контактный блок -->
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-start p-4 border rounded">
+                <h3>Адрес:</h3>
+                <p >11111 г. Санкт-Петербург, Дворцовая площадь, 2</p>
+                <p>Метро: Пушкинская</p>
+
+                <h3>Телефоны:</h3>
+                <p><a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+                <p><a href="tel:+79991234589">+7 (999) 123-45-89</a></p>
+
+                <h3>E-mail:</h3>
+                <p><a href="mailto:info@neva.com">info@neva.com</a></p>
+
+                <h3>Дополнительная информация:</h3>
+                <p>Пять способов заказать дизайн-проект или получить консультацию:</p>
+                <ul class="contact-list">
+                    <li><a href="https://wa.me/79991234567" target="_blank"
+                           style="color: inherit; text-decoration: none;">Написать сообщение в WhatsApp на номер +7
+                        (999) 123-45-67</a></li>
+                    <li><a href="https://t.me/79991234567" target="_blank"
+                           style="color: inherit; text-decoration: none;">Написать сообщение в Telegram на номер +7
+                        (999) 123-45-67</a></li>
+                    <li>Заполнить форму обратной связи внизу этой страницы</li>
+                </ul>
+
+
+                <h3>По вопросам сотрудничества:</h3>
+                <p><a href="mailto:neva@mail.com">neva@mail.com</a></p>
+            </div>
+        </div>
+
+        <!-- Яндекс Карта -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6cb5789cc554d9bdcdded9a6ca2ea5d4eec2576728aa75e86d7e71381481cac3&amp;source=constructor"
+                        width="100%" height="450" frameborder="0"></iframe>
+
+            </div>
+        </div>
+
+        <!-- Форма обратной связи -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                {% include 'marga_design/includes/form.html' %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+

@@ -15,3 +15,5 @@ class ProjectImagePath:
         safe_title = slugify(instance.title)
         return f'projects/{self.field_name}/{safe_title}/{unique_name}.{ext}'
 
+
+
