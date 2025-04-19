@@ -25,7 +25,7 @@ class MargaHome(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['blog_posts'] = BlogPost.objects.all().order_by('-created')[:4]
+        context['blog_posts'] = BlogPost.objects.filter(published=True).order_by('-created')[:4]
         return context
 
 
@@ -61,10 +61,6 @@ class MargaProjectsApplicationCreateView(CreateView):
     def form_valid(self, form):
         form.instance.answer = Application.NEW
         return super().form_valid(form)
-
-    # def form_invalid(self, form):
-    #     print("Форма не прошла валидацию:", form.errors)
-    #     return super().form_invalid(form)
 
 
 class MargaContactCreateView(CreateView):
@@ -114,12 +110,6 @@ class BlogPostEditView(UpdateView):
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
-
-        # if BlogPost.objects.filter(slug=form.instance.slug).exists():
-        #     return self.render_to_response(self.get_context_data(
-        #         form=form,
-        #         error_message="Пост с таким названием уже существует. Выберите уникальное название."
-        #     ))
         return super().form_valid(form)
 
 
