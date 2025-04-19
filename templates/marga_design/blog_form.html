@@ -1,4 +1,5 @@
-{% extends "index.html" %}
+{% extends 'index.html' %}
+{% load static %}
 
 {% block carousel %}
 
@@ -6,7 +7,7 @@
 
 {% block content %}
     <div class="container mt-5 mb-5">
-        <h2>Редактирование поста</h2>
+        <h2>Создание поста</h2>
         <form method="post">
             <div>
                 <button type="submit" class="btn btn-success" onclick="saveContent()">Сохранить изменения</button>
@@ -28,7 +29,6 @@
             <button type="submit" class="btn btn-success" onclick="saveContent()">Сохранить изменения</button>
         </form>
     </div>
-
     <!-- Стили для масштабирования изображений -->
     <style>
         .ql-editor {
@@ -66,7 +66,7 @@
             modules: {
                 toolbar: [
                     [{'header': [1, 2, false]}],
-                    ['italic', 'underline', 'strike'],
+                    ['italic', 'underline', 'strike'],  // Форматирование текста
                     [{'list': 'ordered'}, {'list': 'bullet'}],
                     [{'script': 'sub'}, {'script': 'super'}],
                     [{'indent': '-1'}, {'indent': '+1'}],
@@ -74,8 +74,8 @@
                     [{'size': ['small', false, 'large', 'huge']}],
                     [{'color': []}, {'background': []}],
                     [{'align': []}],
-                    ['link', 'image', 'video'],
-                    ['clean']
+                    ['link', 'image', 'video'],  // 🔹 Возвращаем поддержку ссылок и файлов
+                    ['clean']  // Очистить форматирование
                 ]
             }
         });
@@ -84,4 +84,6 @@
             document.getElementById('hiddenDescription').value = quill.root.innerHTML;
         }
     </script>
+
 {% endblock %}
+

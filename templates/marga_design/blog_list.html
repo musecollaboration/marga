@@ -6,26 +6,38 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container mt-5 mb-5">
-        <div class="row justify-content-center">
-            {% for post in blog_posts %}
-                <div class="col-lg-6 d-flex justify-content-center">
-                    <div class="media-02819 text-center">
-                        {% if post.images.first %}
-                            <a href="{{ post.get_absolute_url }}" class="img-link small">
-                                <img src="{{ post.images.first.image.url }}" alt="Изображение поста"
-                                     class="img-fluid">
-                            </a>
-                        {% else %}
-                            <p>Нет изображения</p>
-                        {% endif %}
-                        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-                        <span>{{ post.created|date:"d M Y" }}</span>
-                    </div>
+    {% if user.is_staff %}
+        <a href="{% url 'marga_design:create_blog_post' %}" class="btn btn-primary">Создать пост</a>
+    {% endif %}
+    <div class="site-section">
+        <div class="container py-7"> <!-- Добавляем вертикальные отступы -->
+            <!-- Центрирование заголовка -->
+            <div class="row mb-5 align-items-center justify-content-center">
+                <div class="col-md-7 text-center">
+                    <h2 class="heading-39291 mb-0">Блог</h2>
                 </div>
-            {% empty %}
-                <p>Пока нет постов</p>
-            {% endfor %}
+            </div>
+            <div class="container mt-5 mb-5">
+                <div class="row justify-content-center">
+                    {% for post in blog_posts %}
+                        <div class="col-lg-6 d-flex justify-content-center">
+                            <div class="media-02819 text-center">
+                                {% if post.images.first %}
+                                    <a href="{{ post.get_absolute_url }}" class="img-link small">
+                                        <img src="{{ post.images.first.image.url }}" alt="Изображение поста"
+                                             class="img-fluid">
+                                    </a>
+                                {% else %}
+                                    <p>Нет изображения</p>
+                                {% endif %}
+                                <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                                <span>{{ post.created|date:"d M Y" }}</span>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>Пока нет постов</p>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-    </div>
 {% endblock %}

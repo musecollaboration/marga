@@ -16,7 +16,7 @@ class Project(AutoSlugMixin):
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания',
                                    help_text='Дата создания проекта')
     updated = models.DateTimeField(auto_now=True, verbose_name='Дата обновления', help_text='Дата обновления проекта')
-    published = models.BooleanField(default=True, verbose_name='Статус',
+    published = models.BooleanField(default=False, verbose_name='Статус',
                                     help_text='Убрать галочку если нужно снять с публикации')
     top_rating = models.BooleanField(default=False, verbose_name='Рейтинг', help_text='Публикации на главной страницы')
 
@@ -114,7 +114,7 @@ class BlogPost(AutoSlugMixin):
     description = models.TextField(verbose_name='Описание поста')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
-    published = models.BooleanField(default=True, verbose_name='Статус',
+    published = models.BooleanField(default=False, verbose_name='Статус',
                                     help_text='Убрать галочку если нужно снять с публикации')
 
     class Meta:

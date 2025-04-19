@@ -81,14 +81,26 @@ class BlogPostImageline(admin.TabularInline):
     model = BlogPostImage
     extra = 1
     max_num = 10
+    readonly_fields = ['image_preview']
     autocomplete_fields = ['blog_post']
+
+    def image_preview(self, obj):
+        if obj.image and hasattr(obj.image, 'url'):
+            return format_html(
+                '<a href="{0}" target="_blank">'
+                '<img src="{0}" style="max-width: 150px; max-height: 150px; margin: 5px;" />'
+                '</a>', obj.image.url
+            )
+        return "Нет изображения"
+
+    image_preview.short_description = "Превью изображения"
 
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ['title', 'created', 'published']
     list_editable = ['published']
-    fields = ['title', 'slug', 'description', 'created', 'published']
+    fields = ['title', 'description', 'created', 'published']
     readonly_fields = ['created']
     list_filter = ['created', 'published']
     search_fields = ['title']
@@ -96,3 +108,19 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_per_page = 10
     save_on_top = True
     inlines = [BlogPostImageline]
+    actions = ['on_published', 'off_published']
+
+    @admin.action(description='Снять с публикации')
+    def off_published(self, request, queryset):
+        count = queryset.update(published=False)
+        self.message_user(
+            request,
+            f'Было снято с публикации {count} проектов')
+
+    @admin.action(description='Опубликовать')
+    def on_published(self, request, queryset):
+        count = queryset.update(published=True)
+        self.message_user(
+            request,
+            f'Было опубликовано {count} проектов'
+        )

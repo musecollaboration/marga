@@ -18,7 +18,7 @@ urlpatterns = [
     path('login/', TemplateView.as_view(template_name='marga_design/login.html'), name='login'),
 
     path("blog/", views.BlogListView.as_view(), name="blog_list"),
-    path("blog/<slug:slug>/", views.BlogPostDetailView.as_view(), name="blog_post"),
     path("blog/<slug:slug>/edit/", views.BlogPostEditView.as_view(), name="blog_edit"),
     path("blog/create/", views.CreateBlogPost.as_view(), name="create_blog_post"),
+    path("blog/<slug:slug>/", views.BlogPostDetailView.as_view(), name="blog_post"),
 ]

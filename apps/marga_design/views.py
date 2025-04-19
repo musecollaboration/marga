@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from slugify import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
-from apps.marga_design.forms import AuthorForm
+from apps.marga_design.forms import AuthorForm, CreateBlogPostForm
 from apps.marga_design.models import Project, Application, BlogPost
 
 
@@ -101,7 +101,7 @@ class BlogPostEditView(UpdateView):
     """Редактирование поста блога"""
     model = BlogPost
     template_name = "marga_design/blog_edit.html"
-    fields = ["title", "content"]
+    form_class = CreateBlogPostForm
 
     def get_success_url(self):
         return self.object.get_absolute_url()  # Перенаправление после сохранения
@@ -111,8 +111,13 @@ class CreateBlogPost(CreateView):
     """Создание нового поста"""
     model = BlogPost
     template_name = "marga_design/blog_form.html"
-    fields = ["title", "content"]
+    form_class = CreateBlogPostForm
 
     def form_valid(self, form):
-        form.instance.slug = slugify(form.instance.title)  # Генерация слага перед сохранением
+        form.instance.slug = slugify(form.instance.title)
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.get_form()
+        return context

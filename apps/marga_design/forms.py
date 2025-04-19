@@ -1,6 +1,6 @@
 from django.forms import ModelForm, CharField
 
-from apps.marga_design.models import Application
+from apps.marga_design.models import Application, BlogPost
 from django import forms
 from .models import Application
 
@@ -26,4 +26,15 @@ class AuthorForm(forms.ModelForm):
 
         help_texts = {
             "phone": "Введите номер в международном формате",
+        }
+
+
+class CreateBlogPostForm(forms.ModelForm):
+    """Форма для создания нового блога"""
+    class Meta:
+        model = BlogPost
+        fields = ['title', 'description']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
         }

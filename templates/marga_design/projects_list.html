@@ -6,24 +6,33 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container mt-5 mb-5 ">
-        <div class="row justify-content-center">
-            {% for project in projects_list %}
-                <div class="col-lg-6 d-flex justify-content-center">
-                    <div class="media-02819 text-center">
-                        {% if project.images.first %}
-                            <a href="{{ project.get_absolute_url }}" class="img-link small">
-                                <img src="{{ project.images.first.image.url }}" alt="Изображение проекта"
-                                     class="img-fluid">
-                            </a>
-                        {% else %}
-                            <p>Нет изображения</p>
-                        {% endif %}
-                        <h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3>
-                        <span>{{ project.location }}</span>
+    <div class="site-section">
+    <div class="container py-7"> <!-- Добавляем вертикальные отступы -->
+        <!-- Центрирование заголовка -->
+        <div class="row mb-5 align-items-center justify-content-center">
+            <div class="col-md-7 text-center">
+                <h2 class="heading-39291 mb-0">Проекты</h2>
+            </div>
+        </div>
+        <div class="container mt-5 mb-5 ">
+            <div class="row justify-content-center">
+                {% for project in projects_list %}
+                    <div class="col-lg-6 d-flex justify-content-center">
+                        <div class="media-02819 text-center">
+                            {% if project.images.first %}
+                                <a href="{{ project.get_absolute_url }}" class="img-link small">
+                                    <img src="{{ project.images.first.image.url }}" alt="Изображение проекта"
+                                         class="img-fluid">
+                                </a>
+                            {% else %}
+                                <p>Нет изображения</p>
+                            {% endif %}
+                            <h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3>
+                            <span>{{ project.location }}</span>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}
