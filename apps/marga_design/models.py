@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from apps.services.models import AutoSlugMixin
+from apps.services.mixins import AutoSlugMixin
 from apps.services.utils import ProjectImagePath
 
 

@@ -31,6 +31,7 @@ class AuthorForm(forms.ModelForm):
 
 class CreateBlogPostForm(forms.ModelForm):
     """Форма для создания нового блога"""
+
     class Meta:
         model = BlogPost
         fields = ['title', 'description']

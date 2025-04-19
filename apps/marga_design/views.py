@@ -1,3 +1,4 @@
+
 from django.urls import reverse_lazy
 from slugify import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
@@ -87,6 +88,11 @@ class BlogListView(ListView):
     context_object_name = "blog_posts"
     ordering = ["-created"]
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(published=True)
+        return queryset
+
 
 class BlogPostDetailView(DetailView):
     """Просмотр поста блога"""
@@ -104,7 +110,17 @@ class BlogPostEditView(UpdateView):
     form_class = CreateBlogPostForm
 
     def get_success_url(self):
-        return self.object.get_absolute_url()  # Перенаправление после сохранения
+        return self.object.get_absolute_url()
+
+    def form_valid(self, form):
+        form.instance.slug = slugify(form.instance.title)
+
+        # if BlogPost.objects.filter(slug=form.instance.slug).exists():
+        #     return self.render_to_response(self.get_context_data(
+        #         form=form,
+        #         error_message="Пост с таким названием уже существует. Выберите уникальное название."
+        #     ))
+        return super().form_valid(form)
 
 
 class CreateBlogPost(CreateView):
@@ -115,6 +131,12 @@ class CreateBlogPost(CreateView):
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
+
+        if BlogPost.objects.filter(slug=form.instance.slug).exists():
+            return self.render_to_response(self.get_context_data(
+                form=form,
+                error_message="Пост с таким названием уже существует. Выберите уникальное название."
+            ))
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
