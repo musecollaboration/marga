@@ -16,4 +16,10 @@ class ProjectImagePath:
         return f'projects/{self.field_name}/{safe_title}/{unique_name}.{ext}'
 
 
-
+def custom_slugify(self, username) -> str:
+    """
+    Функция для создания слага из строки.
+    """
+    unique_name = uuid.uuid4().hex[:8]
+    slug = slugify(username)
+    return f'{slug}-{unique_name}'

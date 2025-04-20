@@ -5,3 +5,6 @@ class UserManagementConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'apps.user_management'
     verbose_name = 'Управление пользователями'
+
+    def ready(self):
+        import apps.user_management.signals
