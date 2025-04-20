@@ -28,6 +28,13 @@ class Project(AutoSlugMixin):
     def get_absolute_url(self):
         return reverse('marga_design:project', kwargs={'slug': self.slug})
 
+    def get_queryset(self):
+        """
+        Список постов (SQL запрос с фильтрацией по статусу опубликованно)
+        """
+        return super().get_queryset().prefetch_related('project_parameters_set__parameter', 'images').filter(
+            status='published')
+
 
 class Parameter(AutoSlugMixin):
     """Модель для параметров"""

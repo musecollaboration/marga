@@ -1,10 +1,10 @@
-
 from django.urls import reverse_lazy
 from slugify import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from apps.marga_design.forms import AuthorForm, CreateBlogPostForm
 from apps.marga_design.models import Project, Application, BlogPost
+from django.db.models.functions import Random
 
 
 # макет https://preview.colorlib.com/#marga
@@ -20,7 +20,7 @@ class MargaHome(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(top_rating=True).order_by('?')[:4]
+        queryset = queryset.filter(top_rating=True).order_by(Random())[:4]
         return queryset
 
     def get_context_data(self, **kwargs):

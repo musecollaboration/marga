@@ -21,3 +21,6 @@ class AutoSlugMixin(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)[:255]
         super().save(*args, **kwargs)
+
+    def get_queryset(self):
+        pass
