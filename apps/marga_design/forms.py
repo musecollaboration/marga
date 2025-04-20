@@ -1,14 +1,20 @@
-from django.forms import ModelForm, CharField
+from django.core.exceptions import ValidationError
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
-from apps.marga_design.models import Application, BlogPost
+from apps.marga_design.models import BlogPost
 from django import forms
 from .models import Application
 
 
 class AuthorForm(forms.ModelForm):
+    """Форма для обратной связи"""
+
+    recaptcha = ReCaptchaField()
+
     class Meta:
         model = Application
-        fields = ["name", "email", "phone", "message"]
+        fields = ["name", "email", "phone", "message", 'recaptcha']
 
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Иванов Иван Иванович"}),
@@ -27,7 +33,6 @@ class AuthorForm(forms.ModelForm):
         help_texts = {
             "phone": "Введите номер в международном формате",
         }
-
 
 class CreateBlogPostForm(forms.ModelForm):
     """Форма для создания нового блога"""

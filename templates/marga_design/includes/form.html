@@ -5,6 +5,7 @@
     <form action="{% url 'marga_design:application' %}" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
+        {{ form.recaptcha.errors }}
         <button type="submit" class="btn btn-primary w-100 mt-3">Отправить</button>
     </form>
 </div>
