@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_cleanup.apps.CleanupConfig',
     'django_recaptcha',
-    'apps.marga_design.apps.MargaDesignConfig'
+    'apps.marga_design.apps.MargaDesignConfig',
+    'apps.user_management.apps.UserManagementConfig',
 
 ]
 

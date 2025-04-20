@@ -22,6 +22,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.marga_design.urls', namespace='marga_design')),
+    path('', include('apps.user_management.urls', namespace='user')),
 ]
 
 if settings.DEBUG:
