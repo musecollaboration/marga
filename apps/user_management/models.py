@@ -8,7 +8,8 @@ class Profile(models.Model):
     """
     Модель для хранения информации о пользователе.
     """
-    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, verbose_name='Пользователь')
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, verbose_name='Пользователь',
+                                related_name='profile')
     phone = models.CharField(max_length=15, blank=True, null=True, verbose_name='Телефон')
     address = models.TextField(blank=True, null=True, verbose_name='Адрес')
     birth_date = models.DateField(blank=True, null=True, verbose_name='Дата рождения')
@@ -26,7 +27,12 @@ class Profile(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('profile', kwargs={'slug': self.slug})
+        return reverse('user', kwargs={'slug': self.slug})
 
     def __str__(self):
         return f'{self.user.username}'
+
+# python manage.py shell_plus --print-sql
+# python manage.py makemigrations
+# python manage.py migrate
+# python manage.py createsuperuser

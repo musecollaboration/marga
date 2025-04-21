@@ -16,10 +16,12 @@ class ProjectImagePath:
         return f'projects/{self.field_name}/{safe_title}/{unique_name}.{ext}'
 
 
-def custom_slugify(self, username) -> str:
+def custom_slugify(instance, slug) -> str:
     """
     Функция для создания слага из строки.
     """
-    unique_name = uuid.uuid4().hex[:8]
-    slug = slugify(username)
-    return f'{slug}-{unique_name}'
+    model = instance.__class__
+    unique_slug = slugify(slug)
+    while model.objects.filter(slug=unique_slug).exists():
+        unique_slug = f'{unique_slug}-{uuid.uuid4().hex[:8]}'
+    return unique_slug

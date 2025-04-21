@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from slugify import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
@@ -62,6 +63,13 @@ class MargaProjectsApplicationCreateView(CreateView):
         form.instance.answer = Application.NEW
         return super().form_valid(form)
 
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+        # if not self.request.user.is_staff:  # Проверяем, сотрудник ли это
+        del form.fields["note"]  # Удаляем поле для клиентов
+        del form.fields["answer"]  # Удаляем поле для клиентов
+        return form
+
 
 class MargaContactCreateView(CreateView):
     """
@@ -75,6 +83,13 @@ class MargaContactCreateView(CreateView):
     def form_valid(self, form):
         form.instance.answer = Application.NEW
         return super().form_valid(form)
+
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+        # if not self.request.user.is_staff:  # Проверяем, сотрудник ли это
+        del form.fields["note"]  # Удаляем поле для клиентов
+        del form.fields["answer"]  # Удаляем поле для клиентов
+        return form
 
 
 class BlogListView(ListView):
@@ -99,7 +114,7 @@ class BlogPostDetailView(DetailView):
     slug_url_kwarg = "slug"
 
 
-class BlogPostEditView(UpdateView):
+class BlogPostEditView(LoginRequiredMixin, UpdateView):
     """Редактирование поста блога"""
     model = BlogPost
     template_name = "marga_design/blog_edit.html"
@@ -113,7 +128,7 @@ class BlogPostEditView(UpdateView):
         return super().form_valid(form)
 
 
-class CreateBlogPost(CreateView):
+class CreateBlogPost(LoginRequiredMixin, CreateView):
     """Создание нового поста"""
     model = BlogPost
     template_name = "marga_design/blog_form.html"

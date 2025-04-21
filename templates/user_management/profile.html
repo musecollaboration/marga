@@ -1,0 +1,188 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block carousel %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3 class="title text-center my-4">Сотрудник: {{ profile.user.last_name }} {{ profile.user.first_name }}</h3>
+
+        <div class="profile-container">
+            <div class="left">
+                <h4>Информация о сотруднике:</h4>
+                <p><strong>Логин:</strong> {{ profile.user.username }}</p>
+                <p><strong>Дата рождения:</strong> {{ profile.birth_date }}</p>
+                <p><strong>Должность:</strong> {{ profile.description }}</p>
+            </div>
+
+            <div class="right">
+                <h4>Заявки:</h4>
+                <div class="applications">
+                    {% for app in applications %}
+                        <a href="{{ app.get_absolute_url }}" class="application-link" style="color: #364d59">
+                            <div class="application-item">
+                                <p><strong>Номер заявки:</strong> {{ app.id }}</p>
+                                <p><strong>Дата обращения:</strong> {{ app.created }}</p>
+                                <p><strong>Последняя редакция заявки:</strong> {{ app.updated }}</p>
+                                <p><strong>ФИО клиента:</strong> {{ app.name }}</p>
+                                <p><strong>Телефон:</strong> {{ app.phone }}</p>
+                                <p><strong>Статус:</strong> <span
+                                        class="status {{ app.answer }}">{{ app.get_answer_display }}</span></p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">« Первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}">‹ Предыдущая</a>
+        {% endif %}
+
+        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Следующая ›</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Последняя »</a>
+        {% endif %}
+    </div>
+
+
+    <style>
+        .profile-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+            min-height: auto; /* Убираем жесткую высоту */
+            padding-bottom:30px; /* Уменьшаем отступ, чтобы `.pagination` не уходил вниз */
+        }
+
+
+        .title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .left {
+            width: 20%;
+            padding: 20px;
+            border-left: 4px solid #43ab92;
+            background: #ffffff;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .right {
+            width: 75%;
+            padding: 25px;
+            background: #f8f9fa;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .applications {
+            padding-left: 20px;
+        }
+
+        .application-item {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease-in-out; /* Плавное изменение цвета */
+        }
+
+        .application-item:hover {
+            background-color: rgba(137, 215, 255, 0.33); /* Светло-зеленый оттенок при наведении */
+            cursor: pointer; /* Добавляет "руку" при наведении */
+        }
+
+        .status {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .status.NEW {
+            color: white;
+            background-color: #5988FC; /* Синий фон */
+            border: 2px solid #3a67cc; /* Темно-синяя обводка */
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+
+        .status.WORK {
+            color: white;
+            background-color: #c4ab4d; /* Золотистый фон */
+            border: 2px solid #a48b39; /* Темно-золотая обводка */
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+
+        .status.PENDING {
+            color: white;
+            background-color: #4deaff; /* Голубой фон */
+            border: 2px solid #28c2e6; /* Темно-голубая обводка */
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+
+        .status.REFUSAL {
+            color: white;
+            background-color: #dc3545; /* Красный фон */
+            border: 2px solid #b52b3a; /* Темно-красная обводка */
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+
+        .status.AGREEMENT {
+            color: white;
+            background-color: #28a745; /* Зеленый фон */
+            border: 2px solid #218838; /* Темно-зеленая обводка */
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px; /* Подняли выше */
+            margin-bottom: 100px; /* Увеличенный отступ снизу */
+            font-size: 16px;
+            position: relative;
+            top: -5px; /* Легкое смещение вверх */
+        }
+
+
+        .pagination a {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #007bff; /* Синий фон */
+            color: white; /* Белый текст */
+            text-decoration: none;
+            border-radius: 5px; /* Закругление углов */
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .pagination a:hover {
+            background-color: #0056b3; /* Темнее при наведении */
+        }
+
+        .pagination span {
+            padding: 6px 12px;
+            font-weight: bold;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+    </style>
+{% endblock %}

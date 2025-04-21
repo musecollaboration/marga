@@ -14,13 +14,15 @@ class AuthorForm(forms.ModelForm):
 
     class Meta:
         model = Application
-        fields = ["name", "email", "phone", "message", 'recaptcha']
+        fields = ["name", "email", "phone", "note", "message", "answer"]
 
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Иванов Иван Иванович"}),
             "email": forms.EmailInput(attrs={"class": "form-control", "placeholder": "ivanov@mail.com"}),
             "phone": forms.TextInput(attrs={"class": "form-control", "placeholder": "+79991234567"}),
             "message": forms.Textarea(attrs={"class": "form-control", "rows": 4, "placeholder": "Введите сообщение"}),
+            "note": forms.Textarea(attrs={"class": "form-control", "rows": 2, "placeholder": "Добавьте примечание"}),
+            "answer": forms.Select(attrs={"class": "form-select"}),
         }
 
         labels = {
@@ -33,6 +35,7 @@ class AuthorForm(forms.ModelForm):
         help_texts = {
             "phone": "Введите номер в международном формате",
         }
+
 
 class CreateBlogPostForm(forms.ModelForm):
     """Форма для создания нового блога"""

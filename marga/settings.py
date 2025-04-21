@@ -144,3 +144,11 @@ SHELL_PLUS = "ipython"
 
 RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_PRIVATE_KEY")
+
+LOGIN_URL = 'user_management:login'
+LOGIN_REDIRECT_URL = 'marga_design:index'
+LOGOUT_REDIRECT_URL = 'marga_design:index'
+
+# Сессия при авторизации
+SESSION_COOKIE_AGE = 28800  # 8 часов (в секундах)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Сессия НЕ удаляется при закрытии браузера

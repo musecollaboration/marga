@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
@@ -92,6 +93,7 @@ class Application(models.Model):
         (AGREEMENT, 'Согласие'),
     ]
 
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="applications", verbose_name="Связанный сотрудник")
     name = models.CharField(max_length=100, verbose_name='ФИО')
     email = models.EmailField(verbose_name='Email')
     phone = models.CharField(max_length=20, verbose_name='Телефон')
@@ -106,6 +108,9 @@ class Application(models.Model):
         verbose_name = 'Заявка клиента'
         verbose_name_plural = 'Заявки клиентов'
         ordering = ['-created']
+
+    def get_absolute_url(self):
+        return reverse('user_management:user_answer', kwargs={'pk': self.pk})
 
     def __str__(self):
         return f'Заявка от: {self.name} | дата: {self.created.strftime("%Y-%m-%d")}'

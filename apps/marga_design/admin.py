@@ -16,6 +16,7 @@ class ProjectImageInline(admin.TabularInline):
     readonly_fields = ['image_preview']
     max_num = 10
 
+    @admin.action(description='Превью изображения')
     def image_preview(self, obj):
         if obj.image and hasattr(obj.image, 'url'):
             return format_html(
@@ -24,8 +25,6 @@ class ProjectImageInline(admin.TabularInline):
                 '</a>', obj.image.url
             )
         return "Нет изображения"
-
-    image_preview.short_description = "Превью изображения"
 
 
 class ProjectParameterInline(admin.TabularInline):
@@ -84,6 +83,7 @@ class BlogPostImageline(admin.TabularInline):
     readonly_fields = ['image_preview']
     autocomplete_fields = ['blog_post']
 
+    @admin.display(description="Превью изображения")
     def image_preview(self, obj):
         if obj.image and hasattr(obj.image, 'url'):
             return format_html(
@@ -92,8 +92,6 @@ class BlogPostImageline(admin.TabularInline):
                 '</a>', obj.image.url
             )
         return "Нет изображения"
-
-    image_preview.short_description = "Превью изображения"
 
 
 @admin.register(BlogPost)

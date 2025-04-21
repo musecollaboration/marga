@@ -1,0 +1,121 @@
+{% extends "index.html" %}
+
+{% block carousel %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="application-container">
+        <h2 class="application-title">Работа с заявкой № {{ application.pk }}</h2>
+
+        <!-- Отображаемые данные (не редактируемые) -->
+        <p class="application-info"><strong>Дата заявки:</strong> {{ application.created }}</p>
+        <p class="application-info"><strong>Дата обновления заявки:</strong> {{ application.updated }}</p>
+        <p class="application-info"><strong>Сообщение клиента:</strong> {{ application.message }}</p>
+
+        <!-- Форма для редактирования -->
+        <form method="post" class="application-form">
+            {% csrf_token %}
+
+            <label for="id_name" class="form-label"><strong>Имя клиента:</strong></label>
+            {{ form.name }}
+
+            <label for="id_email" class="form-label"><strong>Email:</strong></label>
+            {{ form.email }}
+
+            <label for="id_phone" class="form-label"><strong>Телефон:</strong></label>
+            {{ form.phone }}
+
+            <label for="id_note" class="form-label"><strong>Примечание:</strong></label>
+            {{ form.note }}
+
+            <label for="id_answer" class="form-label"><strong>Статус:</strong></label>
+            {{ form.answer }}
+
+{#            {% if form.recaptcha %}#}
+{#                <label for="id_recaptcha" class="form-label"><strong>Подтвердите, что вы не робот:</strong></label>#}
+{#                {{ form.recaptcha }}#}
+{#            {% endif %}#}
+
+            <button type="submit" class="btn-submit">Сохранить изменения</button>
+        </form>
+    </div>
+
+
+    <style>
+        .application-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .application-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .application-info {
+            font-size: 16px;
+            padding: 6px 10px;
+            background: #f1f1f1;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+
+        .application-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fafafa;
+        }
+
+        .form-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        input[type="text"], input[type="email"], textarea, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 60px; /* Уменьшаем примечание */
+            max-height: 120px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background: #28a745;
+            color: #fff;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-submit:hover {
+            background: #218838;
+        }
+
+    </style>
+{% endblock %}
+
+
+
