@@ -18,11 +18,13 @@ class ProfilePage(ListView):
     context_object_name = "applications"
     paginate_by = 3  # Количество заявок на странице
 
+    def get_queryset(self):
+        return Application.objects.select_related("user__profile")
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["profile"] = self.request.user.profile  # Профиль текущего пользователя
         return context  # Не переопределяем `applications`, чтобы пагинация работала
-
 
 
 class ApplicationUpdateView(LoginRequiredMixin, UpdateView):
@@ -39,7 +41,17 @@ class ApplicationUpdateView(LoginRequiredMixin, UpdateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-    # def form_invalid(self, form):
+    def get_queryset(self):
+        return Application.objects.select_related("user__profile")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.object.user:
+            context["profile"] = self.object.user.profile
+        return context
+
+        # def form_invalid(self, form):
+
     #     print("Форма не прошла валидацию")
     #     print(form.errors)  # Вывод ошибок валидации
     #     return super().form_invalid(form)

@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'includes/pagination.html' %}
     <div class="container">
         <h3 class="title text-center my-4">Сотрудник: {{ profile.user.last_name }} {{ profile.user.first_name }}</h3>
-
         <div class="profile-container">
             <div class="left">
                 <h4>Информация о сотруднике:</h4>
@@ -22,6 +22,10 @@
                     {% for app in applications %}
                         <a href="{{ app.get_absolute_url }}" class="application-link" style="color: #364d59">
                             <div class="application-item">
+                                {% if app.user %}
+                                    <p class="work-status"><strong>В работе:</strong> {{ app.user.last_name }}
+                                        ({{ app.user }})</p>
+                                {% endif %}
                                 <p><strong>Номер заявки:</strong> {{ app.id }}</p>
                                 <p><strong>Дата обращения:</strong> {{ app.created }}</p>
                                 <p><strong>Последняя редакция заявки:</strong> {{ app.updated }}</p>
@@ -37,20 +41,7 @@
         </div>
     </div>
 
-    <div class="pagination">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">« Первая</a>
-            <a href="?page={{ page_obj.previous_page_number }}">‹ Предыдущая</a>
-        {% endif %}
-
-        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Следующая ›</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Последняя »</a>
-        {% endif %}
-    </div>
-
+    {% include 'includes/pagination.html' %}
 
     <style>
         .profile-container {
@@ -60,7 +51,7 @@
             gap: 20px;
             flex-wrap: wrap;
             min-height: auto; /* Убираем жесткую высоту */
-            padding-bottom:30px; /* Уменьшаем отступ, чтобы `.pagination` не уходил вниз */
+            padding-bottom: 30px; /* Уменьшаем отступ, чтобы `.pagination` не уходил вниз */
         }
 
 
@@ -149,40 +140,14 @@
             border-radius: 5px;
         }
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px; /* Подняли выше */
-            margin-bottom: 100px; /* Увеличенный отступ снизу */
-            font-size: 16px;
-            position: relative;
-            top: -5px; /* Легкое смещение вверх */
-        }
-
-
-        .pagination a {
-            display: inline-block;
+        .work-status {
+            font-weight: bold; /* Жирный шрифт */
+            color: #dc3545; /* Красный цвет (можно заменить) */
+            background-color: rgba(220, 53, 69, 0.1); /* Легкий фон */
             padding: 6px 12px;
-            background-color: #007bff; /* Синий фон */
-            color: white; /* Белый текст */
-            text-decoration: none;
-            border-radius: 5px; /* Закругление углов */
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .pagination a:hover {
-            background-color: #0056b3; /* Темнее при наведении */
-        }
-
-        .pagination span {
-            padding: 6px 12px;
-            font-weight: bold;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
             border-radius: 5px;
+            display: inline-block;
+            float: right;
         }
-
     </style>
 {% endblock %}

@@ -1,0 +1,51 @@
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page=1">« Первая</a>
+        <a href="?page={{ page_obj.previous_page_number }}">‹ Предыдущая</a>
+    {% endif %}
+
+    <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Следующая ›</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Последняя »</a>
+    {% endif %}
+</div>
+
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 50px; /* Увеличенный отступ снизу */
+        margin-top: 50px; /* Увеличенный отступ сверху */
+        font-size: 16px;
+        position: relative;
+        top: -5px; /* Легкое смещение вверх */
+    }
+
+
+    .pagination a {
+        display: inline-block;
+        padding: 6px 12px;
+        background-color: #007bff; /* Синий фон */
+        color: white; /* Белый текст */
+        text-decoration: none;
+        border-radius: 5px; /* Закругление углов */
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .pagination a:hover {
+        background-color: #0056b3; /* Темнее при наведении */
+    }
+
+    .pagination span {
+        padding: 6px 12px;
+        font-weight: bold;
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+</style>

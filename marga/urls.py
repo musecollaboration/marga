@@ -19,10 +19,16 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
+handler403 = 'apps.marga_design.views.tr_handler403'
+handler404 = 'apps.marga_design.views.tr_handler404'
+handler500 = 'apps.marga_design.views.tr_handler500'
+
+admin.site.site_header = 'Панель администрирования'
+admin.site.index_title = 'Neva Design'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.marga_design.urls', namespace='marga_design')),
-    path('', include('apps.user_management.urls', namespace='user')),
+    path('user/', include('apps.user_management.urls', namespace='user')),
 ]
 
 if settings.DEBUG:
@@ -34,6 +40,3 @@ if settings.DEBUG:
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
-
-admin.site.site_header = 'Панель администрирования'
-admin.site.index_title = 'Neva Design'

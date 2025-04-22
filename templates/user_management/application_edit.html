@@ -9,6 +9,9 @@
         <h2 class="application-title">Работа с заявкой № {{ application.pk }}</h2>
 
         <!-- Отображаемые данные (не редактируемые) -->
+        {% if profile.user %}
+            <p class="work-status"><strong>В работе:</strong> {{ profile.user.last_name }} ({{ profile.user }})</p>
+        {% endif %}
         <p class="application-info"><strong>Дата заявки:</strong> {{ application.created }}</p>
         <p class="application-info"><strong>Дата обновления заявки:</strong> {{ application.updated }}</p>
         <p class="application-info"><strong>Сообщение клиента:</strong> {{ application.message }}</p>
@@ -32,10 +35,10 @@
             <label for="id_answer" class="form-label"><strong>Статус:</strong></label>
             {{ form.answer }}
 
-{#            {% if form.recaptcha %}#}
-{#                <label for="id_recaptcha" class="form-label"><strong>Подтвердите, что вы не робот:</strong></label>#}
-{#                {{ form.recaptcha }}#}
-{#            {% endif %}#}
+            {#            {% if form.recaptcha %}#}
+            {#                <label for="id_recaptcha" class="form-label"><strong>Подтвердите, что вы не робот:</strong></label>#}
+            {#                {{ form.recaptcha }}#}
+            {#            {% endif %}#}
 
             <button type="submit" class="btn-submit">Сохранить изменения</button>
         </form>
@@ -114,6 +117,15 @@
             background: #218838;
         }
 
+        .work-status {
+            font-weight: bold; /* Жирный шрифт */
+            color: #dc3545; /* Красный цвет (можно заменить) */
+            background-color: rgba(220, 53, 69, 0.1); /* Легкий фон */
+            padding: 6px 12px;
+            border-radius: 5px;
+            display: inline-block;
+            float: right;
+        }
     </style>
 {% endblock %}
 

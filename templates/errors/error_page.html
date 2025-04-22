@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block carousel %}
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ error_message }} | <a href="{% url 'marga_design:index' %}"><strong>Вернуться на главную</strong></a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+{% endblock content %}
+
