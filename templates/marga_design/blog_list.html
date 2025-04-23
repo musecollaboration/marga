@@ -6,9 +6,11 @@
 {% endblock %}
 
 {% block content %}
-    {% if user.is_staff %}
+
+    {% if perms.marga_design.add_blogpost %}
         <a href="{% url 'marga_design:create_blog_post' %}" class="btn btn-primary">Создать пост</a>
     {% endif %}
+
     <div class="site-section">
         <div class="container py-7"> <!-- Добавляем вертикальные отступы -->
             <!-- Центрирование заголовка -->

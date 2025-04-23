@@ -19,9 +19,9 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
-handler403 = 'apps.marga_design.views.tr_handler403'
-handler404 = 'apps.marga_design.views.tr_handler404'
-handler500 = 'apps.marga_design.views.tr_handler500'
+# handler403 = 'apps.marga_design.views.tr_handler403'
+# handler404 = 'apps.marga_design.views.tr_handler404'
+# handler500 = 'apps.marga_design.views.tr_handler500'
 
 admin.site.site_header = 'Панель администрирования'
 admin.site.index_title = 'Neva Design'

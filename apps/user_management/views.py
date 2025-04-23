@@ -1,22 +1,21 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponse
 from django.urls import reverse
-from django.views.generic import UpdateView, DetailView
+from django.views.generic import UpdateView
 
 from apps.marga_design.forms import AuthorForm
 from apps.marga_design.models import Application
 from apps.user_management.forms import UserLoginForm
-from apps.user_management.models import Profile
 
 from django.views.generic import ListView
 
 
-class ProfilePage(ListView):
+class ProfilePage(PermissionRequiredMixin, ListView):
     model = Application
     template_name = "user_management/profile.html"
     context_object_name = "applications"
     paginate_by = 3  # Количество заявок на странице
+    permission_required = "user_management.view_profile"  # Права доступа к странице профиля
 
     def get_queryset(self):
         return Application.objects.select_related("user__profile")
@@ -50,18 +49,21 @@ class ApplicationUpdateView(LoginRequiredMixin, UpdateView):
             context["profile"] = self.object.user.profile
         return context
 
-        # def form_invalid(self, form):
-
+    # def form_invalid(self, form):
     #     print("Форма не прошла валидацию")
     #     print(form.errors)  # Вывод ошибок валидации
     #     return super().form_invalid(form)
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
-        if self.request.user.is_staff:  # Проверяем, сотрудник ли это
-            del form.fields["message"]  # Удаляем поле для клиентов
-            del form.fields['recaptcha']
+        if "message" in form.fields:
+            del form.fields["message"]
+        if "recaptcha" in form.fields:
+            del form.fields["recaptcha"]
         return form
+
+    def test_func(self):
+        return self.request.user.has_perm("user_management.change_application")
 
 
 class CustomLoginView(LoginView):

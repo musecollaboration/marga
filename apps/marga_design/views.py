@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from slugify import slugify
@@ -87,11 +87,11 @@ class MargaContactCreateView(CreateView):
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
-        # if not self.request.user.is_staff:  # Проверяем, сотрудник ли это
-        del form.fields["note"]  # Удаляем поле для клиентов
-        del form.fields["answer"]  # Удаляем поле для клиентов
+        if "note" in form.fields:
+            del form.fields["note"]
+        if "answer" in form.fields:
+            del form.fields["answer"]
         return form
-
 
 class BlogListView(ListView):
     """Список всех постов блога"""
@@ -115,11 +115,12 @@ class BlogPostDetailView(DetailView):
     slug_url_kwarg = "slug"
 
 
-class BlogPostEditView(LoginRequiredMixin, UpdateView):
+class BlogPostEditView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     """Редактирование поста блога"""
     model = BlogPost
     template_name = "marga_design/blog_edit.html"
     form_class = CreateBlogPostForm
+    permission_required = "marga_design.change_blogpost"
 
     def get_success_url(self):
         return self.object.get_absolute_url()
@@ -129,11 +130,12 @@ class BlogPostEditView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class CreateBlogPost(LoginRequiredMixin, CreateView):
+class CreateBlogPost(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     """Создание нового поста"""
     model = BlogPost
     template_name = "marga_design/blog_form.html"
     form_class = CreateBlogPostForm
+    permission_required = "marga_design.add_blogpost"
 
     def form_valid(self, form):
         form.instance.slug = slugify(form.instance.title)
