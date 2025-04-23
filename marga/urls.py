@@ -27,8 +27,8 @@ admin.site.site_header = 'Панель администрирования'
 admin.site.index_title = 'Neva Design'
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('apps.marga_design.urls', namespace='marga_design')),
     path('user/', include('apps.user_management.urls', namespace='user')),
+    path('', include('apps.marga_design.urls', namespace='marga_design')),
 ]
 
 if settings.DEBUG:
@@ -39,4 +39,6 @@ if settings.DEBUG:
     ]
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+
+    for static_dir in settings.STATICFILES_DIRS:
+        urlpatterns += static(settings.STATIC_URL, document_root=static_dir)

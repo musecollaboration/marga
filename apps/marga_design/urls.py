@@ -5,7 +5,6 @@ from . import views
 
 app_name = 'marga_design'
 urlpatterns = [
-    path('', views.MargaHome.as_view(template_name='marga_design/home.html'), name='index'),
 
     path('projects/', views.MargaProjectsList.as_view(), name='projects_list'),
     path('project/<slug:slug>/', views.MargaProject.as_view(), name='project'),
@@ -19,4 +18,5 @@ urlpatterns = [
     path("blog/<slug:slug>/edit/", views.BlogPostEditView.as_view(), name="blog_edit"),
     path("blog/create/", views.CreateBlogPost.as_view(), name="create_blog_post"),
     path("blog/<slug:slug>/", views.BlogPostDetailView.as_view(), name="blog_post"),
+    path('', views.MargaHome.as_view(template_name='marga_design/home.html'), name='index'),
 ]
