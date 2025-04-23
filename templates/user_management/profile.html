@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block content %}
-    {% include 'includes/pagination.html' %}
+
+    {% include 'includes/pagination.html' with current_page=page_obj.number %}
+{#    <p>Текущая страница (debug): {{ current_page }}</p>#}
+
+
     <div class="container">
         <h3 class="title text-center my-4">Сотрудник: {{ profile.user.last_name }} {{ profile.user.first_name }}</h3>
         <div class="profile-container">
@@ -41,7 +45,7 @@
         </div>
     </div>
 
-    {% include 'includes/pagination.html' %}
+    {% include 'includes/pagination.html' with current_page=page_obj.number %}
 
     <style>
         .profile-container {

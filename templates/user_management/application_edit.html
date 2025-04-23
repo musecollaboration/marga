@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+{#    <p>Текущая страница (debug): {{ current_page }}</p>#}
     <div class="application-container">
         <h2 class="application-title">Работа с заявкой № {{ application.pk }}</h2>
 
@@ -20,6 +21,9 @@
         <form method="post" class="application-form">
             {% csrf_token %}
 
+            <!-- Скрытое поле для передачи номера страницы -->
+            <input type="hidden" name="current_page" value="{{ current_page }}">
+
             <label for="id_name" class="form-label"><strong>Имя клиента:</strong></label>
             {{ form.name }}
 
@@ -34,11 +38,6 @@
 
             <label for="id_answer" class="form-label"><strong>Статус:</strong></label>
             {{ form.answer }}
-
-            {#            {% if form.recaptcha %}#}
-            {#                <label for="id_recaptcha" class="form-label"><strong>Подтвердите, что вы не робот:</strong></label>#}
-            {#                {{ form.recaptcha }}#}
-            {#            {% endif %}#}
 
             <button type="submit" class="btn-submit">Сохранить изменения</button>
         </form>

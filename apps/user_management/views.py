@@ -23,6 +23,9 @@ class ProfilePage(PermissionRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["profile"] = self.request.user.profile  # Профиль текущего пользователя
+        current_page = self.request.GET.get("page", 1)
+        self.request.session["current_page"] = current_page  # Сохраняем в сессию
+        context["current_page"] = current_page
         return context  # Не переопределяем `applications`, чтобы пагинация работала
 
 
@@ -33,10 +36,11 @@ class ApplicationUpdateView(LoginRequiredMixin, UpdateView):
     form_class = AuthorForm
 
     def get_success_url(self):
-        return reverse("user_management:user", kwargs={"slug": self.object.user.profile.slug})
+        page = self.request.session.get("current_page", 1)  # Берем из сессии
+        return f"{reverse('user_management:user', kwargs={'slug': self.object.user.profile.slug})}?page={page}"
 
     def form_valid(self, form):
-        print(form.cleaned_data)
+        # print(form.cleaned_data)
         form.instance.user = self.request.user
         return super().form_valid(form)
 
@@ -45,6 +49,10 @@ class ApplicationUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Берем `page` либо из GET-запроса, либо из сессии
+        current_page = self.request.GET.get("page", self.request.session.get("current_page", 1))  # Берем из GET или сессии
+        self.request.session["current_page"] = current_page  # Сохраняем в сессию
+        context["current_page"] = current_page
         if self.object.user:
             context["profile"] = self.object.user.profile
         return context
@@ -61,9 +69,6 @@ class ApplicationUpdateView(LoginRequiredMixin, UpdateView):
         if "recaptcha" in form.fields:
             del form.fields["recaptcha"]
         return form
-
-    def test_func(self):
-        return self.request.user.has_perm("user_management.change_application")
 
 
 class CustomLoginView(LoginView):

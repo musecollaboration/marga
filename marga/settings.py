@@ -148,3 +148,5 @@ LOGOUT_REDIRECT_URL = 'marga_design:index'
 # Сессия при авторизации
 SESSION_COOKIE_AGE = 28800  # 8 часов (в секундах)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Сессия НЕ удаляется при закрытии браузера
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
